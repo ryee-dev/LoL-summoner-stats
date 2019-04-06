@@ -47,13 +47,16 @@ export default SummonerForm;
 
 const SummForm = styled.form`
   width: 100%;
+  height: 100%;
+  box-sizing: content-box;
+  background-color: #151a27;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  //background-color: #1D212B;
-  //background-color: #27303F;
   border-radius: 6px;
+  overflow: auto;
 `;
 
 const SummInput = styled.input`

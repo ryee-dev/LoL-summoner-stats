@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 let summonerName;
 
 app.post('/api/summoner', async (req, res) => {
-  summonerName = req.body.summName;
+  summonerName = await req.body.summName;
 });
 
 app.get('/api/summoner', async (req, res) => {
@@ -74,6 +74,7 @@ app.get('/api/summoner', async (req, res) => {
   };
 
   if (summonerName) {
+    console.log(summonerName);
     let fetchAccountId = await axios.get(`https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${process.env.API_KEY}`);
     accountId = fetchAccountId.data.accountId;
 
@@ -135,6 +136,7 @@ app.get('/api/summoner', async (req, res) => {
 
     res.json(playerMatchStatsList);
   } else {
+    console.log("no data");
     res.json(handleEmptyData());
   }
 });

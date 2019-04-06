@@ -1,13 +1,28 @@
 import React, { Suspense, useState } from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
+import { useFetch } from 'react-fetch-hook';
 import { SummonerForm, MatchList } from './components';
+
+const GlobalStyle = createGlobalStyle`
+body {
+  
+}
+`;
 
 const App = () => {
   const [modalStatus, setModalStatus] = useState(null);
   const [summName, setSummName] = useState('');
+
+  const { isLoading, data } = useFetch('http://localhost:3001/api/summoner');
+
+  if (isLoading) {
+    console.log('loading');
+  }
+
   // @ts-ignore
   return (
     <AppShell>
+      <GlobalStyle /> 
       <FloatingContainer>
         <SummonerForm
           summName={summName}
@@ -40,7 +55,7 @@ const App = () => {
                   </div>
                 }
               >
-                <MatchList summonerName={summName} />
+                <MatchList data={data} summonerName={summName} />
               </Suspense>
             </ListWrapper>
           </ResultsModal>
@@ -62,21 +77,13 @@ const AppShell = styled.div`
   justify-content: center;
   flex-direction: column;
   background-color: #06080b;
-  overflow: scroll;
+  overflow: auto;
 `;
 
 const FloatingContainer = styled.div`
   height: 100%;
-  background-color: #151a27;
-  border-radius: 4px;
   width: 100%;
-  max-width: 1200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  //padding: 4rem 0;
-  overflow: scroll;
+  overflow: hidden;
 
   h1 {
     color: white;
